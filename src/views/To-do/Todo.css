@@ -1,0 +1,25 @@
+.w-40{
+    width: 570px;
+}
+.task-container{
+    height: 520px;
+    overflow-y: scroll;
+}
+.add-icon{
+    height: 65px;
+    cursor: pointer;
+}
+.arr-icon{
+    height: 30px;
+}
+.task-container::-webkit-scrollbar{
+    width: 8px;
+}
+.task-container::-webkit-scrollbar-track {
+    background-color: #ababab;
+    border-radius: 100px;
+}
+.task-container::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    background-color: #ff004f;
+}
