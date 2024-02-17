@@ -1,9 +1,9 @@
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import Home from './views/Home/Home';
 import Contact from './views/Contact/Contact';
 import Project from './views/Project/Project';
-import CardDis from './views/CardDis/CardDis';
+import About from './views/About/About';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import Quant from './views/Quant/Quant';
@@ -21,16 +21,16 @@ const router = createBrowserRouter([
     element: <Project/>
   },
   {
-    path: "/project/:id",
-    element: <CardDis/>
+    path: "/project/1",
+    element: <Todo/>
   },
   {
-    path: "/quant",
+    path: "/project/5",
     element: <Quant/>
   },
   {
-    path: "/todo",
-    element: <Todo/>
+    path: "/about",
+    element: <About/>
   },
   {
     path: "/contact",

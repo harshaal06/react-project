@@ -2,29 +2,60 @@ import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 import addIcon from './add-img.png';
 import "./Todo.css";
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TaskCard from './../../components/TaskCard/TaskCard';
 
 
 function Todo() {
-    const [tasks, setTask] = useState([])
-    const [newTask, setNewTask] = useState('')
+    const [tasks, setTask] = useState([]);
+    const [newTask, setNewTask] = useState('');
     const [error, setError] = useState('');
+    const [category, setCategory] = useState('');
+
+    const saveTaskToLS = (taskToSave)=>{
+        localStorage.setItem('tasks',JSON.stringify(taskToSave));
+    }
 
     const addTask = () => {
         if(newTask==''){
-            setError(["First enter a task"])
+            setError("First enter a task");
             return
         }
         else if(newTask.length < 5){
-            setError(["Please enter more than 5 words"])
+            setError("Please enter more than 5 words");
             return
         }
+        else{
+            setError([''])
+        }
 
-        setTask([newTask, ...tasks])
+        const newTasks = [
+            {
+                title: newTask,
+                category: category,
+            }, 
+            ...tasks
+        ]
+        saveTaskToLS(newTasks);
+
+        setTask(newTasks);
         setNewTask('');
-        setError([''])
     }
+
+    const deleteTask = (index) => {
+        const newTask = tasks;
+        newTask.splice(index, 1);
+        setTask([...newTask]);
+
+        saveTaskToLS(newTask);
+    }
+
+    useEffect(()=>{
+        const tasks = localStorage.getItem('tasks');
+        if(tasks){
+            setTask(JSON.parse(tasks));
+        }
+    }, [])
 
     return (
         <div>
@@ -35,7 +66,14 @@ function Todo() {
                     <div className='task-container px-2'>
                         {
                             tasks.map((task, i)=>{
-                                return <TaskCard task={task} key={i}/>
+                                const {title, category} = task;
+                                return (<TaskCard 
+                                            title={title} 
+                                            category={category}
+                                            key={i} 
+                                            delFunction={deleteTask} 
+                                            index={i}
+                                        />)
                             })
                         }
                     </div>
@@ -45,11 +83,23 @@ function Todo() {
                             placeholder='Add a new task' 
                             className='py-2 px-3 rounded-5 border border-dark fs-5 w-100'
                             value={newTask}
-                            onKeyPress={addTask}
                             onChange={(e)=>{
                                 setNewTask(e.target.value)
-                            }}
-                        />
+                            }}/>
+
+                        <select className='p-1 rounded-5 border border-dark w-30 ms-2'
+                                value={category}
+                                onChange={(e)=>{
+                                    setCategory(e.target.value)
+                                }}>
+                            <option>Select</option>
+                            <option value='🎓 College'>🎓 College</option>
+                            <option value='📖 Study'>📖 Study</option>
+                            <option value='🏡 Home'>🏡 Home</option>
+                            <option value='📽️ RTC'>📽️ RTC</option>
+                            <option value='🎨 Hobby'>🎨 Hobby</option>
+                        </select>
+
                         <img 
                             src={addIcon} alt='add' 
                             className='add-icon'
