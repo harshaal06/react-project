@@ -3,6 +3,7 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import Home from './views/Home/Home';
 import Contact from './views/Contact/Contact';
 import Project from './views/Project/Project';
+import ProjectMore from './views/ProjectMore/ProjectMore';
 import About from './views/About/About';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
@@ -21,11 +22,19 @@ const router = createBrowserRouter([
     element: <Project/>
   },
   {
-    path: "/project/1",
+    path: "/projectmore/:id",
+    element: <ProjectMore/>
+  },
+  {
+    path: "/projectmore",
+    element: <ProjectMore/>
+  },
+  {
+    path: "/todo",
     element: <Todo/>
   },
   {
-    path: "/project/5",
+    path: "/quant",
     element: <Quant/>
   },
   {
